@@ -28,6 +28,24 @@ const getProducts = async (req, res) => {
     }
 };
 
+const getProductById = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const product = await Product.findById(id);
+
+        if (!product) {
+            return res.status(404).json({ message: 'Mahsulot topilmadi' });
+        }
+
+        res.json({ data: product });
+    } catch (err) {
+        console.error(err); // Xatoni konsolga chiqarish
+        res.status(500).json({ message: 'Server xatosi' });
+    }
+};
+
+
+
 const deleteProduct = async (req, res) => {
     const { id } = req.params;
 
@@ -44,4 +62,4 @@ const deleteProduct = async (req, res) => {
 };
 
 
-module.exports = { createProduct, getProducts, deleteProduct };
+module.exports = { createProduct, getProducts, deleteProduct, getProductById };
